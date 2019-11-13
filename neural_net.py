@@ -57,14 +57,13 @@ class Neural_Network(nn.Module):
     if __name__ == '__main__':
         # for each category name :
         # ---------------TRAINING---------------------
-        # get x tensor for the category
-        # get y output
+        # get X tensor for the category
+        # get y tensor output
         NN = Neural_Network()
-        # for each input of that category name (training set)
-        # convert and X and y to torches representaions
-        print ("#" + str(i) + " Loss: " + str(torch.mean((y - NN(X))**2).detach().item()))  # mean sum squared loss
-        NN.train(X, y)
-        NN.saveWeights(NN)
+        for i in range(1000):
+            print ("#" + str(i) + " Loss: " + str(torch.mean((y - NN(X))**2).detach().item()))  # mean sum squared loss
+            NN.train(X, y)
+            NN.saveWeights(NN)
         # --------------PREDICT -----------------------------
         # for value in training set xPredicited, expectedOut
         expectedOut = None
@@ -81,7 +80,6 @@ class Neural_Network(nn.Module):
             fp += 1
         else: 
             tn +=1 
-
         #end of loop
         recall = tp / tp + fn
         accuracy = tp + tn / tp + fp + fn + tn
