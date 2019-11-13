@@ -61,6 +61,7 @@ class Neural_Network(nn.Module):
         # get y output
         NN = Neural_Network()
         # for each input of that category name (training set)
+        # convert and X and y to torches representaions
         print ("#" + str(i) + " Loss: " + str(torch.mean((y - NN(X))**2).detach().item()))  # mean sum squared loss
         NN.train(X, y)
         NN.saveWeights(NN)
