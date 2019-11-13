@@ -86,6 +86,5 @@ class Neural_Network(nn.Module):
         recall = tp / tp + fn
         accuracy = tp + tn / tp + fp + fn + tn
         f1 = 2 * (recall * accuracy) / (recall + accuracy)
-        print
 
 
