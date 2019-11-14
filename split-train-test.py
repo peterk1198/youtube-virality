@@ -31,30 +31,31 @@ with open('corpus.json', 'w') as fp:
 
 print('######### Json Dumped #########')
 
-temp_d = defaultdict(list)
+lattice = []
 
 for index, row in tqdm(data.iterrows()):
-	sparse_titles = np.zeros(len(corpus))
-	sparse_cats = np.zeros(len(categories))
+	temp_d = {}
 	T = re.sub(r'\W+', ' ', row['title'])
 	l = T.split(' ')
 
-	for i, cat in enumerate(categories):
+	for cat in categories:
 		if cat == row['category_name']:
-			sparse_cats[i] = 1
+			temp_d[cat] = 1
+		else:
+			temp_d[cat] = 0
 
-	for i, word in enumerate(corpus):
+	for word in corpus:
 		if word in l:
-			sparse_titles[i] = 1
-
-	temp_d['title'].append(tuple(sparse_titles))
-	temp_d['category_name'].append(tuple(sparse_cats))
+			temp_d[word] = 1
+		else:
+			temp_d[word] = 0
+	lattice.append(temp_d)
 
 print('Exporting temp_d to json.')
 with open('temp_d.json', 'w') as fp:
-	json.dump(temp_d, fp, indent=4)
+	json.dump(lattice, fp, indent=4)
 
-df = pd.DataFrame.from_dict(temp_d)
+df = pd.DataFrame(lattice)
 
 print('Exporting df to csv.')
 df.to_csv('df.csv', sep='\t')

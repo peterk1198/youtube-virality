@@ -5,6 +5,7 @@ from tqdm import tqdm
 from collections import defaultdict
 from sklearn import datasets, linear_model
 from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
 from matplotlib import pyplot as plt
 
 # Logistic Regression
@@ -12,12 +13,7 @@ from matplotlib import pyplot as plt
 df = pd.read_csv('./CAvirality.csv')
 y = df['viral']
 
-temp_d = {}
-with open('temp_d.json') as json_file:
-	temp_d = json.load(json_file)
-
-print('Read Json, converting to DF..')
-df = pd.DataFrame.from_dict(temp_d)
+df = pd.read_csv('./df.csv')
 
 print('Creating model.')
 X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.2)
